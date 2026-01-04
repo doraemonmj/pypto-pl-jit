@@ -19,10 +19,12 @@
 
 #include <pybind11/pybind11.h>
 
+#include <cassert>
 #include <string>
 
 #include "../bindings.h"
 #include "pypto/core/error.h"
+#include "pypto/core/logging.h"
 
 namespace py = pybind11;
 
@@ -69,6 +71,18 @@ void raise_index_error(const std::string& message) { throw pypto::IndexError(mes
  */
 void raise_generic_error(const std::string& message) { throw pypto::Error(message); }
 
+/**
+ * @brief Raise an AssertionError from C++ for testing purposes
+ * @param message Error message to include in the exception
+ */
+void raise_assertion_error(const std::string& message) { throw pypto::AssertionError(message); }
+
+/**
+ * @brief Raise an InternalError from C++ for testing purposes
+ * @param message Error message to include in the exception
+ */
+void raise_internal_error(const std::string& message) { throw pypto::InternalError(message); }
+
 // ============================================================================
 // Module binding
 // ============================================================================
@@ -96,6 +110,12 @@ void BindTesting(py::module_& m) {
 
   testing.def("raise_generic_error", &raise_generic_error, py::arg("message"),
               "Raise a generic Error from C++ for testing error handling");
+
+  testing.def("raise_assertion_error", &raise_assertion_error, py::arg("message"),
+              "Raise an AssertionError from C++ for testing error handling");
+
+  testing.def("raise_internal_error", &raise_internal_error, py::arg("message"),
+              "Raise an InternalError from C++ for testing error handling");
 }
 
 }  // namespace python

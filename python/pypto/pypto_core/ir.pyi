@@ -118,13 +118,13 @@ class Var(Expr):
     name: Final[str]
     """Variable name."""
 
-    def __init__(self, name: str, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, name: str, dtype: DataType, span: Span) -> None:
         """Create a variable reference expression.
 
         Args:
             name: Variable name
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class ConstInt(Expr):
@@ -133,13 +133,13 @@ class ConstInt(Expr):
     value: Final[int]
     """Constant integer value."""
 
-    def __init__(self, value: int, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, value: int, dtype: DataType, span: Span) -> None:
         """Create a constant integer expression.
 
         Args:
             value: Integer value
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Call(Expr):
@@ -151,14 +151,14 @@ class Call(Expr):
     args: Final[List[Expr]]
     """Arguments."""
 
-    def __init__(self, op: Op, args: List[Expr], dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, op: Op, args: List[Expr], dtype: DataType, span: Span) -> None:
         """Create a function call expression.
 
         Args:
             op: Operation/function to call
             args: List of argument expressions
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class BinaryExpr(Expr):
@@ -179,348 +179,348 @@ class UnaryExpr(Expr):
 class Add(BinaryExpr):
     """Addition expression (left + right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create an addition expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Sub(BinaryExpr):
     """Subtraction expression (left - right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a subtraction expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Mul(BinaryExpr):
     """Multiplication expression (left * right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a multiplication expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class FloorDiv(BinaryExpr):
     """Floor division expression (left // right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a floor division expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class FloorMod(BinaryExpr):
     """Floor modulo expression (left % right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a floor modulo expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class FloatDiv(BinaryExpr):
     """Float division expression (left / right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a float division expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Min(BinaryExpr):
     """Minimum expression (min(left, right))."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a minimum expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Max(BinaryExpr):
     """Maximum expression (max(left, right))."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a maximum expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Pow(BinaryExpr):
     """Power expression (left ** right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a power expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Eq(BinaryExpr):
     """Equality expression (left == right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create an equality expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Ne(BinaryExpr):
     """Inequality expression (left != right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create an inequality expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Lt(BinaryExpr):
     """Less than expression (left < right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a less than expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Le(BinaryExpr):
     """Less than or equal to expression (left <= right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a less than or equal to expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Gt(BinaryExpr):
     """Greater than expression (left > right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a greater than expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Ge(BinaryExpr):
     """Greater than or equal to expression (left >= right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a greater than or equal to expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class And(BinaryExpr):
     """Logical and expression (left and right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a logical and expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Or(BinaryExpr):
     """Logical or expression (left or right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a logical or expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Xor(BinaryExpr):
     """Logical xor expression (left xor right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a logical xor expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class BitAnd(BinaryExpr):
     """Bitwise and expression (left & right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a bitwise and expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class BitOr(BinaryExpr):
     """Bitwise or expression (left | right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a bitwise or expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class BitXor(BinaryExpr):
     """Bitwise xor expression (left ^ right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a bitwise xor expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class BitShiftLeft(BinaryExpr):
     """Bitwise left shift expression (left << right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a bitwise left shift expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class BitShiftRight(BinaryExpr):
     """Bitwise right shift expression (left >> right)."""
 
-    def __init__(self, left: Expr, right: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, left: Expr, right: Expr, dtype: DataType, span: Span) -> None:
         """Create a bitwise right shift expression.
 
         Args:
             left: Left operand
             right: Right operand
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Abs(UnaryExpr):
     """Absolute value expression (abs(operand))."""
 
-    def __init__(self, operand: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, operand: Expr, dtype: DataType, span: Span) -> None:
         """Create an absolute value expression.
 
         Args:
             operand: Operand expression
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Neg(UnaryExpr):
     """Negation expression (-operand)."""
 
-    def __init__(self, operand: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, operand: Expr, dtype: DataType, span: Span) -> None:
         """Create a negation expression.
 
         Args:
             operand: Operand expression
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class Not(UnaryExpr):
     """Logical not expression (not operand)."""
 
-    def __init__(self, operand: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, operand: Expr, dtype: DataType, span: Span) -> None:
         """Create a logical not expression.
 
         Args:
             operand: Operand expression
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 class BitNot(UnaryExpr):
     """Bitwise not expression (~operand)."""
 
-    def __init__(self, operand: Expr, dtype: DataType = DataType.INT32, span: Span = ...) -> None:
+    def __init__(self, operand: Expr, dtype: DataType, span: Span) -> None:
         """Create a bitwise not expression.
 
         Args:
             operand: Operand expression
-            dtype: Data type (default: INT32)
-            span: Source location (default: unknown span)
+            dtype: Data type
+            span: Source location
         """
 
 def structural_hash(expr: Expr, enable_auto_mapping: bool = False) -> int:

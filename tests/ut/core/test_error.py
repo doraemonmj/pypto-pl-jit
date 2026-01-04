@@ -66,6 +66,18 @@ class TestErrorTypes:
 
         assert "test generic error" in str(exc_info.value)
 
+    def test_assertion_error_type(self):
+        """Test that AssertionError is raised with correct type."""
+        with pytest.raises(AssertionError):
+            testing.raise_assertion_error("test assertion error")
+
+    def test_internal_error_type(self):
+        """Test that InternalError is raised with correct type."""
+        with pytest.raises(RuntimeError) as exc_info:
+            testing.raise_internal_error("test internal error")
+
+        assert "test internal error" in str(exc_info.value)
+
 
 class TestErrorMessages:
     """Test that error messages are properly formatted and include necessary information."""
@@ -187,6 +199,16 @@ class TestErrorInheritance:
         with pytest.raises(Exception):
             testing.raise_index_error("test")
 
+    def test_assertion_error_is_exception(self):
+        """Test that AssertionError can be caught as Exception."""
+        with pytest.raises(Exception):
+            testing.raise_assertion_error("test")
+
+    def test_internal_error_is_exception(self):
+        """Test that InternalError can be caught as Exception."""
+        with pytest.raises(Exception):
+            testing.raise_internal_error("test")
+
 
 class TestErrorCatching:
     """Test various error catching scenarios."""
@@ -217,6 +239,8 @@ class TestErrorCatching:
             (testing.raise_runtime_error, RuntimeError),
             (testing.raise_index_error, IndexError),
             (testing.raise_not_implemented_error, NotImplementedError),
+            (testing.raise_assertion_error, AssertionError),
+            (testing.raise_internal_error, RuntimeError),
         ]
 
         for raise_func, expected_type in error_types:

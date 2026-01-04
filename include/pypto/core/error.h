@@ -272,6 +272,40 @@ class IndexError : public Error {
   PYPTO_ALWAYS_INLINE explicit IndexError(const std::string& message) : Error(message) {}
 };
 
+/**
+ * @brief Exception raised when an assertion fails
+ *
+ * Use this exception when:
+ * - An internal consistency check fails
+ * - A precondition or postcondition is violated
+ * - A debug assertion fails in production code
+ *
+ * Example: AssertionError("Expected x > 0, but got x = -5")
+ */
+class AssertionError : public Error {
+ public:
+  PYPTO_ALWAYS_INLINE explicit AssertionError(const std::string& message) : Error(message) {}
+};
+
+/**
+ * @brief Exception raised when an internal system error occurs
+ *
+ * Use this exception when:
+ * - An unexpected internal state is encountered
+ * - A system invariant is violated
+ * - An error occurs that indicates a bug in the system itself
+ * - Internal data structures become corrupted
+ *
+ * This exception type helps distinguish between user errors (ValueError, TypeError, etc.)
+ * and internal system failures that should not normally occur in production.
+ *
+ * Example: InternalError("Corrupted tensor metadata detected")
+ */
+class InternalError : public Error {
+ public:
+  PYPTO_ALWAYS_INLINE explicit InternalError(const std::string& message) : Error(message) {}
+};
+
 }  // namespace pypto
 
 #endif  // PYPTO_CORE_ERROR_H_

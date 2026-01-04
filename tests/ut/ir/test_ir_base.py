@@ -89,7 +89,7 @@ class TestVar:
     def test_var_creation(self):
         """Test creating a Var expression."""
         span = ir.Span("test.py", 1, 1, 1, 5)
-        var = ir.Var("x", span=span)
+        var = ir.Var("x", DataType.INT64, span)
 
         assert var.name == "x"
         assert var.span.filename == "test.py"
@@ -97,7 +97,7 @@ class TestVar:
     def test_var_is_expr(self):
         """Test that Var is an instance of Expr."""
         span = ir.Span("test.py", 1, 1, 1, 5)
-        var = ir.Var("x", span=span)
+        var = ir.Var("x", DataType.INT64, span)
 
         assert isinstance(var, ir.Expr)
         assert isinstance(var, ir.IRNode)
@@ -105,7 +105,7 @@ class TestVar:
     def test_var_immutability(self):
         """Test that Var attributes are immutable."""
         span = ir.Span("test.py", 1, 1, 1, 5)
-        var = ir.Var("x", span=span)
+        var = ir.Var("x", DataType.INT64, span)
 
         # Attempting to modify should raise AttributeError
         with pytest.raises(AttributeError):
@@ -118,7 +118,7 @@ class TestConstInt:
     def test_const_creation(self):
         """Test creating a ConstInt expression."""
         span = ir.Span("test.py", 1, 1, 1, 5)
-        const = ir.ConstInt(42, span=span)
+        const = ir.ConstInt(42, DataType.INT64, span)
 
         assert const.value == 42
         assert const.span.filename == "test.py"
@@ -126,14 +126,14 @@ class TestConstInt:
     def test_const_integer(self):
         """Test ConstInt with integer values."""
         span = ir.Span("test.py", 1, 1, 1, 5)
-        const = ir.ConstInt(5, span=span)
+        const = ir.ConstInt(5, DataType.INT64, span)
 
         assert const.value == 5
 
     def test_const_is_expr(self):
         """Test that ConstInt is an instance of Expr."""
         span = ir.Span("test.py", 1, 1, 1, 5)
-        const = ir.ConstInt(10, span=span)
+        const = ir.ConstInt(10, DataType.INT64, span)
 
         assert isinstance(const, ir.Expr)
         assert isinstance(const, ir.IRNode)
@@ -141,7 +141,7 @@ class TestConstInt:
     def test_const_immutability(self):
         """Test that ConstInt attributes are immutable."""
         span = ir.Span("test.py", 1, 1, 1, 5)
-        const = ir.ConstInt(42, span=span)
+        const = ir.ConstInt(42, DataType.INT64, span)
 
         # Attempting to modify should raise AttributeError
         with pytest.raises(AttributeError):
@@ -154,9 +154,10 @@ class TestBinaryExpressions:
     def test_add_creation(self):
         """Test creating an Add expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
-        add_expr = ir.Add(x, y, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
+        add_expr = ir.Add(x, y, dtype, span)
 
         assert cast(ir.Var, add_expr.left).name == "x"
         assert cast(ir.Var, add_expr.right).name == "y"
@@ -164,9 +165,10 @@ class TestBinaryExpressions:
     def test_add_is_binary_expr(self):
         """Test that Add is an instance of BinaryExpr."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
-        add_expr = ir.Add(x, y, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
+        add_expr = ir.Add(x, y, dtype, span)
 
         assert isinstance(add_expr, ir.BinaryExpr)
         assert isinstance(add_expr, ir.Expr)
@@ -175,9 +177,10 @@ class TestBinaryExpressions:
     def test_sub_creation(self):
         """Test creating a Sub expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
-        sub_expr = ir.Sub(x, y, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
+        sub_expr = ir.Sub(x, y, dtype, span)
 
         assert cast(ir.Var, sub_expr.left).name == "x"
         assert cast(ir.Var, sub_expr.right).name == "y"
@@ -185,9 +188,10 @@ class TestBinaryExpressions:
     def test_mul_creation(self):
         """Test creating a Mul expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
-        mul_expr = ir.Mul(x, y, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
+        mul_expr = ir.Mul(x, y, dtype, span)
 
         assert cast(ir.Var, mul_expr.left).name == "x"
         assert cast(ir.Var, mul_expr.right).name == "y"
@@ -195,9 +199,10 @@ class TestBinaryExpressions:
     def test_floatdiv_creation(self):
         """Test creating a FloatDiv expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
-        div_expr = ir.FloatDiv(x, y, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
+        div_expr = ir.FloatDiv(x, y, dtype, span)
 
         assert cast(ir.Var, div_expr.left).name == "x"
         assert cast(ir.Var, div_expr.right).name == "y"
@@ -205,9 +210,10 @@ class TestBinaryExpressions:
     def test_floormod_creation(self):
         """Test creating a FloorMod expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
-        mod_expr = ir.FloorMod(x, y, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
+        mod_expr = ir.FloorMod(x, y, dtype, span)
 
         assert cast(ir.Var, mod_expr.left).name == "x"
         assert cast(ir.Var, mod_expr.right).name == "y"
@@ -215,9 +221,10 @@ class TestBinaryExpressions:
     def test_floordiv_creation(self):
         """Test creating a FloorDiv expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
-        floordiv_expr = ir.FloorDiv(x, y, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
+        floordiv_expr = ir.FloorDiv(x, y, dtype, span)
 
         assert cast(ir.Var, floordiv_expr.left).name == "x"
         assert cast(ir.Var, floordiv_expr.right).name == "y"
@@ -225,82 +232,87 @@ class TestBinaryExpressions:
     def test_comparison_ops(self):
         """Test creating comparison expressions."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
 
-        eq_expr = ir.Eq(x, y, span=span)
+        eq_expr = ir.Eq(x, y, dtype, span)
         assert cast(ir.Var, eq_expr.left).name == "x"
 
-        ne_expr = ir.Ne(x, y, span=span)
+        ne_expr = ir.Ne(x, y, dtype, span)
         assert cast(ir.Var, ne_expr.left).name == "x"
 
-        lt_expr = ir.Lt(x, y, span=span)
+        lt_expr = ir.Lt(x, y, dtype, span)
         assert cast(ir.Var, lt_expr.left).name == "x"
 
-        le_expr = ir.Le(x, y, span=span)
+        le_expr = ir.Le(x, y, dtype, span)
         assert cast(ir.Var, le_expr.left).name == "x"
 
-        gt_expr = ir.Gt(x, y, span=span)
+        gt_expr = ir.Gt(x, y, dtype, span)
         assert cast(ir.Var, gt_expr.left).name == "x"
 
-        ge_expr = ir.Ge(x, y, span=span)
+        ge_expr = ir.Ge(x, y, dtype, span)
         assert cast(ir.Var, ge_expr.left).name == "x"
 
     def test_logical_ops(self):
         """Test creating logical expressions."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
 
-        and_expr = ir.And(x, y, span=span)
+        and_expr = ir.And(x, y, dtype, span)
         assert cast(ir.Var, and_expr.left).name == "x"
 
-        or_expr = ir.Or(x, y, span=span)
+        or_expr = ir.Or(x, y, dtype, span)
         assert cast(ir.Var, or_expr.left).name == "x"
 
-        xor_expr = ir.Xor(x, y, span=span)
+        xor_expr = ir.Xor(x, y, dtype, span)
         assert cast(ir.Var, xor_expr.left).name == "x"
 
     def test_bitwise_ops(self):
         """Test creating bitwise expressions."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
 
-        bitand_expr = ir.BitAnd(x, y, span=span)
+        bitand_expr = ir.BitAnd(x, y, dtype, span)
         assert cast(ir.Var, bitand_expr.left).name == "x"
 
-        bitor_expr = ir.BitOr(x, y, span=span)
+        bitor_expr = ir.BitOr(x, y, dtype, span)
         assert cast(ir.Var, bitor_expr.left).name == "x"
 
-        bitxor_expr = ir.BitXor(x, y, span=span)
+        bitxor_expr = ir.BitXor(x, y, dtype, span)
         assert cast(ir.Var, bitxor_expr.left).name == "x"
 
-        shl_expr = ir.BitShiftLeft(x, y, span=span)
+        shl_expr = ir.BitShiftLeft(x, y, dtype, span)
         assert cast(ir.Var, shl_expr.left).name == "x"
 
-        shr_expr = ir.BitShiftRight(x, y, span=span)
+        shr_expr = ir.BitShiftRight(x, y, dtype, span)
         assert cast(ir.Var, shr_expr.left).name == "x"
 
     def test_min_max(self):
         """Test creating Min and Max expressions."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
 
-        min_expr = ir.Min(x, y, span=span)
+        min_expr = ir.Min(x, y, dtype, span)
         assert cast(ir.Var, min_expr.left).name == "x"
 
-        max_expr = ir.Max(x, y, span=span)
+        max_expr = ir.Max(x, y, dtype, span)
         assert cast(ir.Var, max_expr.left).name == "x"
 
     def test_pow(self):
         """Test creating Pow expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
 
-        pow_expr = ir.Pow(x, y, span=span)
+        pow_expr = ir.Pow(x, y, dtype, span)
         assert cast(ir.Var, pow_expr.left).name == "x"
         assert cast(ir.Var, pow_expr.right).name == "y"
 
@@ -311,8 +323,9 @@ class TestUnaryExpressions:
     def test_neg_creation(self):
         """Test creating a Neg expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        neg_expr = ir.Neg(x, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        neg_expr = ir.Neg(x, dtype, span)
 
         assert cast(ir.Var, neg_expr.operand).name == "x"
         assert isinstance(neg_expr, ir.UnaryExpr)
@@ -321,24 +334,27 @@ class TestUnaryExpressions:
     def test_abs_creation(self):
         """Test creating an Abs expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        abs_expr = ir.Abs(x, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        abs_expr = ir.Abs(x, dtype, span)
 
         assert cast(ir.Var, abs_expr.operand).name == "x"
 
     def test_not_creation(self):
         """Test creating a Not expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        not_expr = ir.Not(x, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        not_expr = ir.Not(x, dtype, span)
 
         assert cast(ir.Var, not_expr.operand).name == "x"
 
     def test_bitnot_creation(self):
         """Test creating a BitNot expression."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        bitnot_expr = ir.BitNot(x, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        bitnot_expr = ir.BitNot(x, dtype, span)
 
         assert cast(ir.Var, bitnot_expr.operand).name == "x"
 
@@ -349,12 +365,13 @@ class TestNestedExpressions:
     def test_simple_nested_expression(self):
         """Test building a simple nested expression: (x + 5) * 2."""
         span = ir.Span("test.py", 1, 1, 1, 20)
-        x = ir.Var("x", span=span)
-        c5 = ir.ConstInt(5, span=span)
-        c2 = ir.ConstInt(2, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        c5 = ir.ConstInt(5, dtype, span)
+        c2 = ir.ConstInt(2, dtype, span)
 
-        add_expr = ir.Add(x, c5, span=span)
-        mul_expr = ir.Mul(add_expr, c2, span=span)
+        add_expr = ir.Add(x, c5, dtype, span)
+        mul_expr = ir.Mul(add_expr, c2, dtype, span)
 
         # Verify structure
         assert isinstance(mul_expr.left, ir.Add)
@@ -365,14 +382,15 @@ class TestNestedExpressions:
     def test_complex_nested_expression(self):
         """Test building a complex expression: ((a + b) * (c - d))."""
         span = ir.Span("test.py", 1, 1, 1, 30)
-        a = ir.Var("a", span=span)
-        b = ir.Var("b", span=span)
-        c = ir.Var("c", span=span)
-        d = ir.Var("d", span=span)
+        dtype = DataType.INT64
+        a = ir.Var("a", dtype, span)
+        b = ir.Var("b", dtype, span)
+        c = ir.Var("c", dtype, span)
+        d = ir.Var("d", dtype, span)
 
-        add_expr = ir.Add(a, b, span=span)
-        sub_expr = ir.Sub(c, d, span=span)
-        mul_expr = ir.Mul(add_expr, sub_expr, span=span)
+        add_expr = ir.Add(a, b, dtype, span)
+        sub_expr = ir.Sub(c, d, dtype, span)
+        mul_expr = ir.Mul(add_expr, sub_expr, dtype, span)
 
         # Verify structure
         assert isinstance(mul_expr.left, ir.Add)
@@ -385,16 +403,17 @@ class TestNestedExpressions:
     def test_deeply_nested_expression(self):
         """Test building a deeply nested expression: (((x + 1) - 2) * 3) / 4."""
         span = ir.Span("test.py", 1, 1, 1, 40)
-        x = ir.Var("x", span=span)
-        c1 = ir.ConstInt(1, span=span)
-        c2 = ir.ConstInt(2, span=span)
-        c3 = ir.ConstInt(3, span=span)
-        c4 = ir.ConstInt(4, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        c1 = ir.ConstInt(1, dtype, span)
+        c2 = ir.ConstInt(2, dtype, span)
+        c3 = ir.ConstInt(3, dtype, span)
+        c4 = ir.ConstInt(4, dtype, span)
 
-        add_expr = ir.Add(x, c1, span=span)
-        sub_expr = ir.Sub(add_expr, c2, span=span)
-        mul_expr = ir.Mul(sub_expr, c3, span=span)
-        div_expr = ir.FloatDiv(mul_expr, c4, span=span)
+        add_expr = ir.Add(x, c1, dtype, span)
+        sub_expr = ir.Sub(add_expr, c2, dtype, span)
+        mul_expr = ir.Mul(sub_expr, c3, dtype, span)
+        div_expr = ir.FloatDiv(mul_expr, c4, dtype, span)
 
         # Verify structure depth
         assert isinstance(div_expr.left, ir.Mul)
@@ -404,18 +423,19 @@ class TestNestedExpressions:
     def test_all_operations(self):
         """Test expression using multiple operations."""
         span = ir.Span("test.py", 1, 1, 1, 50)
-        a = ir.Var("a", span=span)
-        b = ir.Var("b", span=span)
-        c = ir.Var("c", span=span)
-        d = ir.Var("d", span=span)
-        e = ir.Var("e", span=span)
-        f = ir.Var("f", span=span)
+        dtype = DataType.INT64
+        a = ir.Var("a", dtype, span)
+        b = ir.Var("b", dtype, span)
+        c = ir.Var("c", dtype, span)
+        d = ir.Var("d", dtype, span)
+        e = ir.Var("e", dtype, span)
+        f = ir.Var("f", dtype, span)
 
-        add_expr = ir.Add(a, b, span=span)
-        mul_expr = ir.Mul(c, d, span=span)
-        mod_expr = ir.FloorMod(e, f, span=span)
-        div_expr = ir.FloatDiv(mul_expr, mod_expr, span=span)
-        final_expr = ir.Sub(add_expr, div_expr, span=span)
+        add_expr = ir.Add(a, b, dtype, span)
+        mul_expr = ir.Mul(c, d, dtype, span)
+        mod_expr = ir.FloorMod(e, f, dtype, span)
+        div_expr = ir.FloatDiv(mul_expr, mod_expr, dtype, span)
+        final_expr = ir.Sub(add_expr, div_expr, dtype, span)
 
         # Verify structure
         assert isinstance(final_expr, ir.Sub)
@@ -425,11 +445,12 @@ class TestNestedExpressions:
     def test_unary_with_binary(self):
         """Test mixing unary and binary expressions: -(x + 5)."""
         span = ir.Span("test.py", 1, 1, 1, 20)
-        x = ir.Var("x", span=span)
-        c5 = ir.ConstInt(5, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        c5 = ir.ConstInt(5, dtype, span)
 
-        add_expr = ir.Add(x, c5, span=span)
-        neg_expr = ir.Neg(add_expr, span=span)
+        add_expr = ir.Add(x, c5, dtype, span)
+        neg_expr = ir.Neg(add_expr, dtype, span)
 
         # Verify structure
         assert isinstance(neg_expr, ir.Neg)
@@ -443,18 +464,20 @@ class TestImmutability:
     def test_expr_operands_immutable(self):
         """Test that binary expression operands cannot be modified."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
-        y = ir.Var("y", span=span)
-        add_expr = ir.Add(x, y, span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
+        y = ir.Var("y", dtype, span)
+        add_expr = ir.Add(x, y, dtype, span)
 
         # Attempting to modify should raise AttributeError
         with pytest.raises(AttributeError):
-            add_expr.left = ir.Var("z", span=span)  # type: ignore
+            add_expr.left = ir.Var("z", dtype, span)  # type: ignore
 
     def test_span_immutable_in_node(self):
         """Test that span attribute in IRNode is immutable."""
         span = ir.Span.unknown()
-        x = ir.Var("x", span=span)
+        dtype = DataType.INT64
+        x = ir.Var("x", dtype, span)
 
         # Attempting to modify should raise AttributeError
         with pytest.raises(AttributeError):
@@ -469,10 +492,11 @@ class TestSpanTracking:
         span1 = ir.Span("file1.py", 1, 1, 1, 5)
         span2 = ir.Span("file2.py", 2, 2, 2, 5)
         span3 = ir.Span("file3.py", 3, 3, 3, 10)
+        dtype = DataType.INT64
 
-        x = ir.Var("x", span=span1)
-        y = ir.Var("y", span=span2)
-        add_expr = ir.Add(x, y, span=span3)
+        x = ir.Var("x", dtype, span1)
+        y = ir.Var("y", dtype, span2)
+        add_expr = ir.Add(x, y, dtype, span3)
 
         assert x.span.filename == "file1.py"
         assert y.span.filename == "file2.py"
@@ -481,7 +505,7 @@ class TestSpanTracking:
     def test_unknown_span(self):
         """Test creating IR nodes with unknown spans."""
         unknown_span = ir.Span.unknown()
-        x = ir.Var("x", dtype=DataType.INT64, span=unknown_span)
+        x = ir.Var("x", DataType.INT64, unknown_span)
 
         assert x.span.is_valid() is False
         assert x.span.filename == ""

@@ -32,3 +32,9 @@ def raise_index_error(message: str) -> NoReturn:
 
 def raise_generic_error(message: str) -> NoReturn:
     """Raise a generic Error from C++ for testing error handling"""
+
+def raise_assertion_error(message: str) -> NoReturn:
+    """Raise an AssertionError from C++ for testing purposes"""
+
+def raise_internal_error(message: str) -> NoReturn:
+    """Raise an InternalError from C++ for testing error handling"""

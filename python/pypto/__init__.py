@@ -17,6 +17,7 @@ from typing import cast
 
 from .pypto_core import (
     DataType,
+    LogLevel,
     dtype_to_string,
     get_dtype_bit,
     ir,
@@ -24,6 +25,13 @@ from .pypto_core import (
     is_int,
     is_signed_int,
     is_unsigned_int,
+    log_debug,
+    log_error,
+    log_event,
+    log_fatal,
+    log_info,
+    log_warn,
+    set_log_level,
     testing,
 )
 
@@ -51,6 +59,15 @@ __all__ = [
     # Modules
     "testing",
     "ir",
+    # Logging framework
+    "LogLevel",
+    "set_log_level",
+    "log_debug",
+    "log_info",
+    "log_warn",
+    "log_error",
+    "log_fatal",
+    "log_event",
     # DataType enum and utilities
     "DataType",
     "get_dtype_bit",

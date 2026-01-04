@@ -40,6 +40,9 @@ PYBIND11_MODULE(pypto_core, m) {
   // Register IR (Intermediate Representation) bindings
   pypto::python::BindIR(m);
 
+  // Register logging framework bindings
+  pypto::python::BindLogging(m);
+
   // Future bindings can be added here:
   // pypto::python::BindTensors(m);
   // pypto::python::BindOps(m);

@@ -22,6 +22,8 @@ namespace python {
 void BindCore(py::module_& m) {
   // Bind DataType enum
   py::enum_<DataType>(m, "DataType", "Enumeration of all supported data types in PyPTO")
+      // Boolean type
+      .value("BOOL", DataType::BOOL, "Boolean (true/false)")
       // Signed integer types
       .value("INT4", DataType::INT4, "4-bit signed integer")
       .value("INT8", DataType::INT8, "8-bit signed integer")
@@ -43,8 +45,6 @@ void BindCore(py::module_& m) {
       // Hybrid float types
       .value("HF4", DataType::HF4, "4-bit hybrid float")
       .value("HF8", DataType::HF8, "8-bit hybrid float")
-      // Boolean type
-      .value("BOOL", DataType::BOOL, "Boolean (true/false)")
       .export_values();  // Export values to module scope for convenience
 
   // Bind helper functions

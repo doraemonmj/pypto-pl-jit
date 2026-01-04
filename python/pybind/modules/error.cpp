@@ -36,6 +36,8 @@ void BindErrors(py::module_& m) {
   static py::exception<pypto::NotImplementedError> exc_not_implemented_error(m, "NotImplementedError",
                                                                              PyExc_NotImplementedError);
   static py::exception<pypto::IndexError> exc_index_error(m, "IndexError", PyExc_IndexError);
+  static py::exception<pypto::AssertionError> exc_assertion_error(m, "AssertionError", PyExc_AssertionError);
+  static py::exception<pypto::InternalError> exc_internal_error(m, "InternalError", PyExc_RuntimeError);
 
   // Register exception translator to convert C++ exceptions to Python exceptions
   // This translator includes the full stack trace in the Python exception message
@@ -53,6 +55,10 @@ void BindErrors(py::module_& m) {
       PyErr_SetString(PyExc_NotImplementedError, e.GetFullMessage().c_str());
     } catch (const pypto::IndexError& e) {
       PyErr_SetString(PyExc_IndexError, e.GetFullMessage().c_str());
+    } catch (const pypto::AssertionError& e) {
+      PyErr_SetString(PyExc_AssertionError, e.GetFullMessage().c_str());
+    } catch (const pypto::InternalError& e) {
+      PyErr_SetString(exc_internal_error.ptr(), e.GetFullMessage().c_str());
     } catch (const pypto::Error& e) {
       // Catch base Error last as a fallback
       PyErr_SetString(PyExc_Exception, e.GetFullMessage().c_str());

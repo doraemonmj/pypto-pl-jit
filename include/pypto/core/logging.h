@@ -79,18 +79,18 @@ class TTYCmd {
  * - EVENT: Special events and milestones
  * - NONE: Disable all logging
  */
-enum class LogLevel {
+enum class LogLevel : uint8_t {
   DEBUG = 0,
-  INFO,
-  WARN,
-  ERROR,
-  FATAL,
-  EVENT,
-  NONE,
+  INFO = 1,
+  WARN = 2,
+  ERROR = 3,
+  FATAL = 4,
+  EVENT = 5,
+  NONE = 6,
 };
 
 /**
- * @brief Standard output logger that writes to stdout
+ * @brief Standard error logger that writes to stderr
  *
  * Supports colored output using TTY commands.
  */
@@ -102,7 +102,7 @@ class StdLogger {
    * @return Reference to this logger for chaining
    */
   StdLogger& Log(TTYCmd&& cmd) {
-    std::cout << cmd.Str();
+    std::cerr << cmd.Str();
     return *this;
   }
 
@@ -114,7 +114,7 @@ class StdLogger {
    */
   template <typename T>
   StdLogger& Log(T&& t) {
-    std::cout << (std::forward<T>(t));
+    std::cerr << (std::forward<T>(t));
     return *this;
   }
 
@@ -430,8 +430,6 @@ class Logger {
   }
 };
 
-}  // namespace pypto
-
 // Convenience macros for logging at different levels
 #define LOG_LEVEL(lvl) pypto::Logger(lvl, __func__, __LINE__)
 #define LOG_DEBUG LOG_LEVEL(pypto::LogLevel::DEBUG)
@@ -465,5 +463,7 @@ class Logger {
 // Shorter aliases for convenience
 #define LOGI LOG_INFO_F
 #define LOGE LOG_ERROR_F
+
+}  // namespace pypto
 
 #endif  // PYPTO_CORE_LOGGING_H_

@@ -16,6 +16,17 @@ This package provides Python bindings for the PyPTO C++ library.
 from enum import IntEnum
 
 from . import ir, testing
+from .logging import (
+    InternalError,
+    LogLevel,
+    log_debug,
+    log_error,
+    log_event,
+    log_fatal,
+    log_info,
+    log_warn,
+    set_log_level,
+)
 
 class DataType(IntEnum):
     """Enumeration of all supported data types in PyPTO"""
@@ -113,6 +124,17 @@ __all__ = [
     "testing",
     # Core IR types
     "ir",
+    # Error classes
+    "InternalError",
+    # Logging framework
+    "LogLevel",
+    "set_log_level",
+    "log_debug",
+    "log_info",
+    "log_warn",
+    "log_error",
+    "log_fatal",
+    "log_event",
     # DataType enum and utilities
     "DataType",
     "get_dtype_bit",

@@ -66,6 +66,16 @@ void BindCore(pybind11::module_& m);
  */
 void BindIR(pybind11::module_& m);
 
+/**
+ * @brief Register logging framework types and functions
+ *
+ * Registers the LogLevel enum and LoggerManager functions for controlling
+ * the logging system from Python.
+ *
+ * @param m The pybind11 module object
+ */
+void BindLogging(pybind11::module_& m);
+
 // Future binding declarations can be added here:
 // void BindTensors(pybind11::module_& m);
 // void BindOps(pybind11::module_& m);
